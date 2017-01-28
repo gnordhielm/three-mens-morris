@@ -41,3 +41,71 @@ as soon as one player has three consecutive pieces, a popup appears:
 				on click, re-render the game with the names intact.
 */
 
+
+////////// Set Up Players //////////
+
+var playerOneName = "Player One"
+var playerTwoName = "Player Two"
+
+function Player(name) {
+	this.name = name
+	this.pieces = [name, name, name]
+	this.turn = false
+}
+
+var playerOne = new Player(playerOneName)
+var playerTwo = new Player(playerTwoName)
+
+////////// Set Up Board //////////
+
+var board = {
+	a1: null,
+	a2: null,
+	a3: null,
+	b1: null,
+	b2: null,
+	b3: null,
+	c1: null,
+	c2: null,
+	c3: null
+}
+
+function coinToss(pOne, pTwo) {
+	switch(Math.floor(Math.random() * 2)) {
+		case 0:
+			pOne.turn = true
+			break;
+		case 1:
+			pTwo.turn = true
+			break;
+	}
+}
+
+////////// Place Phase //////////
+
+
+
+
+////////// Move Phase //////////
+
+
+
+////////// For Playing in Console //////////
+
+// player1 = prompt("What is Player 1's name?")
+// player2 = prompt("What is Player 2's name?")
+
+////////// Run  //////////
+
+
+
+
+
+
+
+
+
+
+
+
+
