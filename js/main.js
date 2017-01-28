@@ -65,6 +65,14 @@ form.addEventListener('submit', function(event){
 	formWrapper.style.display = 'none'
 })
 
+messageButton = document.getElementById('messageButton')
+gameWrapper = document.getElementsByClassName('game')[0]
+
+messageButton.addEventListener('click', function(event){
+	messageWrapper.style.display = 'none'
+	gameWrapper.style.display = 'block'
+})
+
 ////////// Set Up Players //////////
 
 
