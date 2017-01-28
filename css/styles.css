@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Scope+One|Bitter');
+
+/*
+color palette:
+
+dark brown #4e342e
+oxblood #76323f
+chalkboard #565656
+sky blue #caebf2
+papyrus #fcfaf5
+fossil #d7cec7
+
+*/
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	height: 100%;
+	width: 100%;
+	font-family: "Scope One", serif;
+	font-size: 18px;
+
+}
+
+div.wrapper {
+	height: 100%;
+	width: 100%;
+	background: #fcfaf5;
+}
+
+h1 {
+	font-family: "Bitter", serif;
+	font-size: 30px;
+	text-align: center;
+	color:#76323f;
+
+	padding: 15px;
+}
+
+label {
+    display: block;
+	text-align: center;
+}
+
+input {
+    font-family: 'Scope One',serif;
+    font-size: 18px;
+    font-style: italic;
+    text-align: center;
+
+    padding: 12px 20px;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+input:focus {
+    border: 3px solid #555;
+}
+
+button[type=submit] {
+    font-family: 'Bitter',serif;
+    font-size: 18px;
+    cursor: pointer;
+
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 0;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+button[type=submit]:hover {
+    background-color: #555;
+    color: #CCC;
+}
+
+/********** name input **********/
+
+div.input h1 {
+	padding-top: 40px;
+}
+
+div.input form {
+	width: 100%;
+	text-align: center;
+}
+
+div.input div {
+	display: inline-block;
+	padding: 20px;
+}
+
+div.input input {
+	width: 140px;
+    margin: 8px 0;
+    border: 3px solid #ccc;
+}
+
+div.input input:focus {
+    border: 3px solid #555;
+}
+
+div.input button[type=submit] {
+    width: 100px;
+
+}
+
+div.input button[type=submit]:hover {
+    background-color: #555;
+    color: #CCC;
+}
+
+
+/********** instructor message **********/
+div.message {
+	display: none;
+	background-color: red;
+	width: 100%;
+	height: 100%;
+}
+
+/**********game page **********/
+div.game {
+	display: none;
+}

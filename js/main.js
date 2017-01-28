@@ -41,15 +41,36 @@ as soon as one player has three consecutive pieces, a popup appears:
 				on click, re-render the game with the names intact.
 */
 
-
-////////// Set Up Players //////////
+////////// Global Variables //////////
 
 var playerOneName = "Player One"
 var playerTwoName = "Player Two"
 
+////////// Tie Game Flow to HTML //////////
+
+form = document.getElementsByTagName('form')[0]
+formWrapper = document.getElementsByClassName('input')[0]
+messageWrapper = document.getElementsByClassName('message')[0]
+nameOneField = document.getElementById('playerOneName')
+nameTwoField = document.getElementById('playerTwoName')
+
+form.addEventListener('submit', function(event){
+	event.preventDefault()
+	if (nameOneField.value !== "") playerOneName = nameOneField.value
+	if (nameTwoField.value !== "") playerTwoName = nameTwoField.value
+	if ((nameOneField.value === "Kate" || nameTwoField.value === "Kate") 
+	  ||(nameOneField.value === "Ira" || nameTwoField.value === "Ira")) {
+		messageWrapper.style.display = 'block'
+	}
+	formWrapper.style.display = 'none'
+})
+
+////////// Set Up Players //////////
+
+
 function Player(name) {
 	this.name = name
-	this.pieces = [name, name, name]
+	this.pieces = [null, null, null]
 	this.turn = false
 }
 
@@ -58,17 +79,11 @@ var playerTwo = new Player(playerTwoName)
 
 ////////// Set Up Board //////////
 
-var board = {
-	a1: null,
-	a2: null,
-	a3: null,
-	b1: null,
-	b2: null,
-	b3: null,
-	c1: null,
-	c2: null,
-	c3: null
-}
+var gameBoard = [
+	"a1", "a2", "a3",
+	"b1", "b2", "b3",
+	"c1", "c2", "c3"
+]
 
 function coinToss(pOne, pTwo) {
 	switch(Math.floor(Math.random() * 2)) {
@@ -81,21 +96,84 @@ function coinToss(pOne, pTwo) {
 	}
 }
 
+////////// Start Game //////////
+
+function checkForWin(player) {
+	if (player.pieces.indexOf(null) !== -1) {
+		// check for unplayed pieces
+		return false
+	} else if (player.pieces[0][0] === player.pieces[1][0] && 
+			   player.pieces[0][0] === player.pieces[2][0]) {
+		// horizontal win
+		return true
+	} else if (player.pieces[0][1] === player.pieces[1][1] && 
+			   player.pieces[0][1] === player.pieces[2][1]) {
+		// vertical win
+		return true
+	} else if (player.pieces[0] === 'a1' && 
+			   player.pieces[0] === 'b2'&& 
+			   player.pieces[0] === 'c3') {
+		// l > r diagonal win
+		return true
+	} else if (player.pieces[0] === 'a3' && 
+			   player.pieces[0] === 'b2'&& 
+			   player.pieces[0] === 'c1') {
+		//r > l diagonal win
+		return true
+	} else {
+		return false
+	}
+}
+
+function nextTurn(pOne, pTwo) {
+	if (pOne.turn === true) {
+		pOne.turn === false
+		pTwo.turn === true
+	} else {
+		pOne.turn === true
+		pTwo.turn === false
+	}
+}
+
 ////////// Place Phase //////////
 
+function isLegalPlace(destination) {
+	if (playerOne.pieces.indexOf(destination) !== -1) {
+		return false
+	} else if (playerTwo.pieces.indexOf(destination) !== -1) {
+		return false
+	} else {
+		return true
+	}
+}
 
-
+function placePiece(player, destination) {
+	player.pieces[player.pieces.indexOf(null)] = destination
+}
 
 ////////// Move Phase //////////
 
+function isLegalMove(location, destination) {
+	if (playerOne.pieces.indexOf(destination) !== -1) {
+		return false
+	} else if (playerTwo.pieces.indexOf(destination) !== -1) {
+		return false
+	} else if ((location[0] === destination[0]) && 
+		      Math.abs(location.charCodeAt(1) - destination.charCodeAt(1)) === 1) {
+		// horizontal adjacency
+		return false
+	} else if ((location[1] === destination[1]) && 
+		      Math.abs(location.charCodeAt(0) - destination.charCodeAt(0)) === 1) {
+		// vertical adjacency
+		return false
+	} else {
+		return true
+	}
+}
 
-
-////////// For Playing in Console //////////
-
-// player1 = prompt("What is Player 1's name?")
-// player2 = prompt("What is Player 2's name?")
-
-////////// Run  //////////
+function movePiece(player, location, destination) {
+	player.pieces[player.pieces.indexOf(location)] = destination
+}
 
 
 
