@@ -22,10 +22,10 @@ body {
 	width: 100%;
 	font-family: "Scope One", serif;
 	font-size: 18px;
-
+	overflow: hidden;
 }
 
-div.wrapper {
+.wrapper {
 	height: 100%;
 	width: 100%;
 	background: #fcfaf5;
@@ -59,6 +59,12 @@ span.number {
 	font-family: 'Bitter', serif;
 	font-size: 22px;
 	color: #76323f;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
 }
 
 label {
@@ -104,32 +110,32 @@ button:hover {
 /********** name input **********/
 
 
-div.input form {
+.input form {
 	width: 100%;
 	text-align: center;
 }
 
-div.input div {
+.input div {
 	display: inline-block;
 	padding: 20px;
 }
 
-div.input input {
+.input input {
 	width: 140px;
     margin: 8px 0;
     border: 3px solid #ccc;
 }
 
-div.input input:focus {
+.input input:focus {
     border: 3px solid #555;
 }
 
-div.input button {
+.input button {
     width: 100px;
 
 }
 
-div.input button:hover {
+.input button:hover {
     background-color: #555;
     color: #CCC;
 }
@@ -137,21 +143,18 @@ div.input button:hover {
 
 /********** instructor message **********/
 
-div.message {
+.message {
 	display: none;
 	background-color: #fcfaf5;
 	text-align: center;
 }
 
-div.message hr {
-    border: 0;
-    height: 2px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+.message hr {
     width: 200px;
     margin-bottom: 20px;
 }
 
-div.message div {
+.message div {
 	width: 370px;
 	padding-bottom: 40px; 
 	margin: 0 auto;
@@ -160,21 +163,18 @@ div.message div {
 
 /********** instructions **********/
 
-div.instructions {
+.instructions {
 	display: none;
 	background-color: #fcfaf5;
 	text-align: center;
 }
 
-div.instructions hr {
-    border: 0;
-    height: 2px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+.instructions hr {
     width: 200px;
     margin-bottom: 20px;
 }
 
-div.instructions div {
+.instructions div {
 	width: 370px;
 	padding-bottom: 40px; 
 	margin: 0 auto;
@@ -182,16 +182,151 @@ div.instructions div {
 
 /********** game page **********/
 .message, .input, .instructions {
-	display: none;
-}
-
-div.game {
 	/*display: none;*/
 }
 
+.game {
+	display: none;
+
+}
+
+#gameBoard {
+	display: none;
+}
+
+#coinToss div {
+	padding-top: 190px;
+}
+
+
+.game button {
+	display: block;
+	margin: 0 auto;
+}
+
+#restartButton {
+	margin-top: 50px; 
+}
+
+.panels {
+	text-align: center;
+	width: 500px;
+	margin: 0 auto;
+}
+
+#playerOnePanel, #playerTwoPanel {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	padding: 20px;
+}
+
+.off {
+	z-index: 0;
+	position: absolute;
+	height: 50px;
+	width: 190px;
+	background-color: #d7cec7;
+	border-radius: 25px;
+	margin: -75px 0 0 -500px;
+	-webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+
+.left {
+	z-index: 0;
+	position: absolute;
+	height: 50px;
+	width: 190px;
+	background-color: #d7cec7;
+	border-radius: 25px;
+	margin: -75px 0 0 -500px;
+	-webkit-transition: 0.5s;
+    transition: 0.5s;
+	margin: -75px 0 0 39px;
+}
+
+.right {
+	z-index: 0;
+	position: absolute;
+	height: 50px;
+	width: 190px;
+	background-color: #d7cec7;
+	border-radius: 25px;
+	margin: -75px 0 0 -500px;
+	-webkit-transition: 0.5s;
+    transition: 0.5s;
+	margin: -75px 0 0 269px;
+}
+
+.piece {
+	cursor: pointer;
+	z-index: 2;
+	position: absolute;
+	border-radius: 50%;
+	height: 70px;
+	width: 70px;			
+	-webkit-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+.playerOnePiece {
+	background-image: -webkit-linear-gradient(top, #f7f7f7, #f4f1ee);
+	background-image: linear-gradient(top, #f7f7f7, #f4f1ee);
+	box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, .3), 
+				inset 0px 4px 1px 1px #fff, 
+				inset 0px -3px 1px 1px rgba(204,198,197,.5);
+}
+.playerTwoPiece {
+	background-image: -webkit-linear-gradient(top, #6f6d6d, #3e3e3e);
+	background-image: linear-gradient(top, #6f6d6d, #3e3e3e);
+	box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.3), 
+				inset 0px 4px 1px 1px #7b7b7b, 
+				inset 0px -3px 1px 1px rgba(47, 47, 47, 0.5);
+}
+
+.holder {
+	height: 90px;
+}
+
+.board{
+	background-color: #d7cec7;
+	position: relative;
+	height: 450px;
+	width: 450px;
+	border-radius: 40px;
+	margin: 0 auto;
+}
+
+.row {
+}
+
+.space {
+	cursor: pointer;
+	display: inline-block;
+	background-color: #565656;
+
+	/* length of one edge should be 147px */
+	margin: 68px;
+	height: 11px;
+	width: 11px;
+
+	border-radius: 50%;
+}
+
+.space:hover {
+	background-color: #76323f;
+}
+
+
 /********** restart modal **********/
 
-div.restart {
+.restart {
 	background-color: red;
 	display: none;
 }
+
+
+
+
+
