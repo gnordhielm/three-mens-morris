@@ -46,13 +46,17 @@ as soon as one player has three consecutive pieces, a popup appears:
 var playerOneName = "Player One"
 var playerTwoName = "Player Two"
 
-////////// Tie Game Flow to HTML //////////
+////////// Opening Interface //////////
 
 form = document.getElementsByTagName('form')[0]
 formWrapper = document.getElementsByClassName('input')[0]
-messageWrapper = document.getElementsByClassName('message')[0]
+
 nameOneField = document.getElementById('playerOneName')
 nameTwoField = document.getElementById('playerTwoName')
+
+messageWrapper = document.getElementsByClassName('message')[0]
+instructionsWrapper = document.getElementsByClassName('instructions')[0]
+
 
 form.addEventListener('submit', function(event){
 	event.preventDefault()
@@ -61,15 +65,24 @@ form.addEventListener('submit', function(event){
 	if ((nameOneField.value === "Kate" || nameTwoField.value === "Kate") 
 	  ||(nameOneField.value === "Ira" || nameTwoField.value === "Ira")) {
 		messageWrapper.style.display = 'block'
+	} else {
+		instructionsWrapper.style.display = 'block'
 	}
 	formWrapper.style.display = 'none'
 })
 
 messageButton = document.getElementById('messageButton')
-gameWrapper = document.getElementsByClassName('game')[0]
 
 messageButton.addEventListener('click', function(event){
 	messageWrapper.style.display = 'none'
+	instructionsWrapper.style.display = 'block'
+})
+
+instructionsButton = document.getElementById('instructionsButton')
+gameWrapper = document.getElementsByClassName('game')[0]
+
+instructionsButton.addEventListener('click', function(event){
+	instructionsWrapper.style.display = 'none'
 	gameWrapper.style.display = 'block'
 })
 
