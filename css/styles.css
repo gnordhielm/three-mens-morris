@@ -181,9 +181,6 @@ button:hover {
 }
 
 /********** game page **********/
-.message, .input, .instructions {
-	/*display: none;*/
-}
 
 .game {
 	display: none;
@@ -215,6 +212,7 @@ button:hover {
 }
 
 #playerOnePanel, #playerTwoPanel {
+	min-width: 180px;
 	position: relative;
 	z-index: 1;
 	display: inline-block;
@@ -287,6 +285,8 @@ button:hover {
 
 .holder {
 	height: 90px;
+	-webkit-transition: all .2s linear;
+	transition: all .2s linear;
 }
 
 .board{

@@ -3,10 +3,7 @@ console.log("main.js is connected...")
 
 user arrives - prompted for two player names. 
 
-(if name === 'Ira' or 'Kate', offer explanation message
-	cool-button      not-cool-button
-	  continue on       apology and animation to 404-error
-)
+(if name === 'Ira' or 'Kate', offer explanation message)
 
 offer some instructions:
 	the board is empty to begin.
@@ -39,6 +36,12 @@ as soon as one player has three consecutive pieces, a popup appears:
 			"Player X wins!"
 			play again
 				on click, re-render the game with the names intact.
+
+
+issues:
+
+add an alert when you've selected someone else's piece to move. 
+
 */
 
 ////////// Gameplay Global Variables //////////
@@ -71,6 +74,13 @@ var playedPieces = 0
 var spaces = document.getElementsByClassName('space')
 var playerOnePieces = document.getElementsByClassName('playerOnePiece')
 var playerTwoPieces = document.getElementsByClassName('playerTwoPiece')
+var allPieces = document.getElementsByClassName('piece')
+
+var currentPhase = 'place'
+var moveBuilder = {
+	location:'',
+	destination:''
+}
 
 ////////// Welcome Interface //////////
 
@@ -133,12 +143,28 @@ function makePlayers() {
 function makeBoard() {
 	for (var i = 0; i < spaces.length; i++) {
 		spaces[i].addEventListener('click', function(event){
-			if (playerOne.turn) {
-				playPlaceTurn(playerOne, this.id)
-			} else {
-				playPlaceTurn(playerTwo, this.id)
+			switch(currentPhase) {
+				case 'place':
+					if (playerOne.turn) {
+						playPlaceTurn(playerOne, this.id)
+					} else {
+						playPlaceTurn(playerTwo, this.id)
+					}
+					if (playedPieces === 6) startMovePhase()
+					break
+				case 'move':
+					if (moveBuilder.location === '') {
+						alert("Select a piece to move first!")
+					} else {
+						moveBuilder.destination = this.id
+						if (playerOne.turn) {
+							playMoveTurn(playerOne)
+						} else {
+							playMoveTurn(playerTwo)
+						}
+					}
+					break
 			}
-			if (playedPieces === 6) startMovePhase()
 		})
 	}
 }
@@ -170,14 +196,16 @@ coinTossButton.addEventListener('click', function(event){
 restartButton.addEventListener('click', function(event){
 	// board doesn't get made again
 	restartToken = true
+	// no pieces have been played
+	playedPieces = 0
+	currentPhase = 'place'
 	// turn indicator is offscreen
 	turnIndicator.className = "off"
+	// holder is expanded
+	document.getElementsByClassName('holder')[0].style.height = "90px"
 	// pieces are up top
-	for (var i = 0; i < playerOnePieces.length; i++) {
-		playerOnePieces[i].style.top = '-100px'
-	}
-	for (var i = 0; i < playerTwoPieces.length; i++) {
-		playerTwoPieces[i].style.top = '-100px'
+	for (var i = 0; i < allPieces.length; i++) {
+		allPieces[i].style.top = '-100px'
 	}
 	playerOnePieces[0].style.left = '133px'
 	playerOnePieces[1].style.left = '73px'
@@ -191,9 +219,21 @@ restartButton.addEventListener('click', function(event){
 	// player.turn are both false
 	playerOne.turn = false
 	playerTwo.turn = false
+	// reset moveBuilder
+	moveBuilder.location = ''
+	moveBuilder.destination = ''
 	// coin toss, not game board, is visible
 	document.getElementById('coinToss').style.display = 'block'
 	document.getElementById('gameBoard').style.display = 'none'
+
+	// this may be a shitty way of resetting the game
+	
+	// location.reload()
+	// formWrapper.style.display = 'none'
+	// instructionsWrapper.style.display = 'none'
+	// document.getElementById('coinToss').style.display = 'block'
+	// document.getElementById('gameBoard').style.display = 'none'
+
 })
 
 ////////// Start Game //////////
@@ -253,7 +293,13 @@ function checkForWin(player) {
 	}
 }
 
+function winner(player) {
+	alert(player.name + " wins the game!")
+}
+
 function nextTurn() {
+	moveBuilder.location = ''
+	moveBuilder.destination = ''
 	if (playerOne.turn === true) {
 		playerOne.turn = false
 		playerTwo.turn = true
@@ -285,14 +331,21 @@ function placePiece(player, destination) {
 ////////// Move Phase //////////
 
 function startMovePhase() {
-	// for loop to give pieces onclick trigger. Differentiate between black and white.
-	// make a variable to hold a move as it's built up - location and destination
+	for (var i = 0; i < allPieces.length; i++) {
+		allPieces[i].addEventListener('click', function(event) {
+			moveBuilder.location = styleToPostition(this)
+		})
+	}
+	//change currentPhase
+	currentPhase = 'move'
 	//collapse the holder div
+	document.getElementsByClassName('holder')[0].style.height = '15px'
 }
 
-function playMoveTurn(player, location, destination) {
-	if (isLegalPlace(destination)) {
-		placePiece(player, destination)
+function playMoveTurn(player) {
+	if (isLegalMove(moveBuilder.location, moveBuilder.destination)) {
+		movePiece(player)
+		updateBoard(player)
 		if (checkForWin(player)) {
 			winner(player)
 		} else {
@@ -321,14 +374,40 @@ function isLegalMove(location, destination) {
 	}
 }
 
-function movePiece(player, location, destination) {
-	player.pieces[player.pieces.indexOf(location)] = destination
+function movePiece(player) {
+	player.pieces[player.pieces.indexOf(moveBuilder.location)] = moveBuilder.destination
 }
 
-function winner(player) {
-	alert(player.name + " wins the game!")
-}
 
+function styleToPostition(piece) {
+	if (piece.style.top === '-100px' ) {
+		return null
+	} else {
+		switch (piece.style.top) {
+			case '38px':
+				row = 'a'
+				break
+			case '190px':
+				row = 'b'
+				break
+			case '342px':
+				row = 'c'
+				break
+		}
+		switch (piece.style.left) {
+			case '38px':
+				col = '1'
+				break
+			case '190px':
+				col = '2'
+				break
+			case '342px':
+				col = '3'
+				break
+		}
+		return row + col
+	}
+}
 
 
 
