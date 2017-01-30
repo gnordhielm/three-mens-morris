@@ -98,8 +98,8 @@ form.addEventListener('submit', function(event){
 	event.preventDefault()
 	if (nameOneField.value !== "") playerOneName = nameOneField.value
 	if (nameTwoField.value !== "") playerTwoName = nameTwoField.value
-	if ((nameOneField.value === "Kate" || nameTwoField.value === "Kate") 
-	  ||(nameOneField.value === "Ira" || nameTwoField.value === "Ira")) {
+	if ((nameOneField.value === "Kate" || nameTwoField.value === "Kate" || nameTwoField.value === "Vivi") 
+	  ||(nameOneField.value === "Ira" || nameTwoField.value === "Ira" || nameTwoField.value === "Vivi")) {
 		messageWrapper.style.display = 'block'
 	} else {
 		instructionsWrapper.style.display = 'block'
